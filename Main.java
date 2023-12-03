@@ -11,12 +11,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.LinkOption;
 //import java.nio.file.Path;
 
-// logging
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.io.IOException;
-
 public class Main {
 
     public static final String projectName = "dydns";
