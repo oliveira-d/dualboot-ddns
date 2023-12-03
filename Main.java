@@ -5,9 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-// getting input to write configuration file
-import java.util.Scanner;
-
 // used to check write privileges
 import java.nio.file.FileSystems;
 //import java.nio.file.Files;
@@ -37,39 +34,27 @@ public class Main {
         String configFilePath = configFolderName + "/" + configFileName;
         Path configFile = Paths.get(configFilePath);
         
+        ConfigHandler configHandler = new ConfigHandler(configFilePath);
         if (!Files.exists(configFile)) {
             System.err.println("Configuration file not found in "+configFilePath);
             if (!hasWritePrivileges(configFolderName)){
                 System.err.println("No write privileges to "+configFolderName);
                 System.err.println("Try running the program as root to write the configuration file.");
                 System.exit(0);
+            } else {
+                System.out.println("Writing config...");
+                configHandler.createConfig(configurationParameters);
             }
-            System.out.println("Writing config...");
-
-            ConfigWriter configWriter = new ConfigWriter();
-
-            // Set properties
-            Scanner scanner = new Scanner(System.in);
-            String value;
-            for (int i=0; i<configurationParameters.length; i++){
-                System.out.println("Enter "+configurationParameters[i]+":");
-                value = scanner.nextLine();
-                configWriter.setProperty(configurationParameters[i],value);
-            }
-
-            // Write to config file
-            configWriter.writeConfig(configFilePath);
-            
             System.out.println("Configuration file created at "+configFilePath);
             System.out.println("Run the program again to update you DDNS records.");
         } else {
             ConfigReader configReader = new ConfigReader();
-            configReader.readConfig(configFilePath);
+            configHandler.readConfig();
 
-            String username = configReader.getProperty("username");
-            String password = configReader.getProperty("password");
-            String hostname = configReader.getProperty("hostname");
-            String domain = configReader.getProperty("domain");
+            String username = configHandler.getProperty("username");
+            String password = configHandler.getProperty("password");
+            String hostname = configHandler.getProperty("hostname");
+            String domain = configHandler.getProperty("domain");
             //procedes to update DDNS
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
@@ -91,5 +76,19 @@ public class Main {
             return false;
         }
     }
+
+    // public static void createConfig(ConfigHandler configHandler, String[] configurationParameters) {
+        
+    //     Scanner scanner = new Scanner(System.in);
+    //     String value;
+    //     for (int i=0; i<configurationParameters.length; i++){
+    //         System.out.println("Enter "+configurationParameters[i]+":");
+    //         value = scanner.nextLine();
+    //         configHandler.setProperty(configurationParameters[i],value);
+    //     }
+
+    //     // Write to config file
+    //     configHandler.writeConfig();
+    // }
 
 }
