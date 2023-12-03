@@ -6,9 +6,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class NoIp {
+public class DyDNS {
     
-    public static void update(String username, String password, String hostname, String domain, String currentIP) throws IOException {
+    public static String getCurrentIP() throws IOException {
+        URL url = new URL("https://ifconfig.me/");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
+            return reader.readLine().trim();
+        }
+    }
+    
+    public static void NoIpUpdate(String username, String password, String hostname, String domain, String currentIP) throws IOException {
         String updateUrl = String.format("https://dynupdate.no-ip.com/nic/update?hostname=%s.%s", hostname, domain);
         URL url = new URL(updateUrl);
 

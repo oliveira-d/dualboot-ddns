@@ -1,14 +1,9 @@
+import java.io.IOException;
+
 //user for checking wether configuration files and paths exist
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-//used by NoIP updater
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 // getting input to write configuration file
 import java.util.Scanner;
@@ -22,34 +17,30 @@ import java.nio.file.LinkOption;
 public class Main {
     public static void main(String[] args) {
 
-        String configFolderName0 = "/usr/local/etc";
-        String configFolderName1 = "/etc";
+        String[] configFolderNames = {"/usr/local/etc","/etc","."};
         String configFileName = "dydns.conf";
-        String configFolder = "";
-        String configFilePath = "";
         String[] configurationParameters = {"username","password","hostname","domain"};
 
-        Path configPath0 = Paths.get(configFolderName0);
-        Path configPath1 = Paths.get(configFolderName1);
-         
-
-        if (Files.exists(configPath0) && Files.isDirectory(configPath0)){
-            configFolder = configFolderName0;
-        } else if (Files.exists(configPath1) && Files.isDirectory(configPath1)) {
-            configFolder = configFolderName1;
-        } else {
-            System.out.println("No configuration folder found: could not locate "+configFolderName0+" or "+configFolderName1);
-            System.out.println("Configuration file "+configFileName+" will be written in the same folder as the executable.");
-            configFolder = ".";
+        Path[] configFolderPaths = new Path[configFolderNames.length];
+        for (int i=0; i<configFolderNames.length; i++) {
+            configFolderPaths[i] = Paths.get(configFolderNames[i]);
         }
-        configFilePath = configFolder + "/" + configFileName;
 
+        String configFolderName = "";
+        for (int i=0; i<configFolderNames.length; i++) {
+            if (Files.exists(configFolderPaths[i]) && Files.isDirectory(configFolderPaths[i])) {
+                configFolderName = configFolderNames[i];
+                break;
+            }
+        }
+
+        String configFilePath = configFolderName + "/" + configFileName;
         Path configFile = Paths.get(configFilePath);
         
         if (!Files.exists(configFile)) {
             System.err.println("Configuration file not found in "+configFilePath);
-            if (!hasWritePrivileges(configFolder)){
-                System.err.println("No write privileges to "+configFolder);
+            if (!hasWritePrivileges(configFolderName)){
+                System.err.println("No write privileges to "+configFolderName);
                 System.err.println("Try running the program as root to write the configuration file.");
                 System.exit(0);
             }
@@ -82,18 +73,11 @@ public class Main {
             //procedes to update DDNS
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
-                String currentIP = getCurrentIP();
-                NoIp.update(username, password, hostname, domain, currentIP);
+                String currentIP = DyDNS.getCurrentIP();
+                DyDNS.NoIpUpdate(username, password, hostname, domain, currentIP);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private static String getCurrentIP() throws IOException {
-        URL url = new URL("https://ifconfig.me/");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
-            return reader.readLine().trim();
         }
     }
 
