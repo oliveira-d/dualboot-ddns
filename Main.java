@@ -48,9 +48,7 @@ public class Main {
             System.out.println("Configuration file created at "+configFilePath);
             System.out.println("Run the program again to update you DDNS records.");
         } else {
-            ConfigReader configReader = new ConfigReader();
             configHandler.readConfig();
-
             String username = configHandler.getProperty("username");
             String password = configHandler.getProperty("password");
             String hostname = configHandler.getProperty("hostname");
