@@ -8,3 +8,4 @@ javac Main.java
 jar cfm dydns.jar MANIFEST.MF *.class
 
 This will generate the executable dydns.jar
+Alternatively, double click on Windows or issue the command "bash build.cmd" on Unix-like systems
