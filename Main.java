@@ -11,11 +11,21 @@ import java.nio.file.FileSystems;
 import java.nio.file.LinkOption;
 //import java.nio.file.Path;
 
+// logging
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.io.IOException;
+
 public class Main {
+
+    public static final String projectName = "dydns";
+    
     public static void main(String[] args) {
 
+        // Check configuration file
         String[] configFolderNames = {"/usr/local/etc","/etc","."};
-        String configFileName = "dydns.conf";
+        String configFileName = projectName + ".conf";
         String[] configurationParameters = {"username","password","hostname","domain"};
 
         Path[] configFolderPaths = new Path[configFolderNames.length];
@@ -74,19 +84,4 @@ public class Main {
             return false;
         }
     }
-
-    // public static void createConfig(ConfigHandler configHandler, String[] configurationParameters) {
-        
-    //     Scanner scanner = new Scanner(System.in);
-    //     String value;
-    //     for (int i=0; i<configurationParameters.length; i++){
-    //         System.out.println("Enter "+configurationParameters[i]+":");
-    //         value = scanner.nextLine();
-    //         configHandler.setProperty(configurationParameters[i],value);
-    //     }
-
-    //     // Write to config file
-    //     configHandler.writeConfig();
-    // }
-
 }
