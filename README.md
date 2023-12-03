@@ -1,4 +1,4 @@
-# dualboot-ddns
+# DyDNS
 Small project to keep DNS records updated on dynamic IP. Written for No-IP, but might get support for others DDNS providers.
 Wrote it because No-IP's Dynamic Update Client does not support FreeBSD (my server's OS) and I'm trying to learn Java so it was convenient.
 
