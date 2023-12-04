@@ -50,7 +50,8 @@ public class Main {
                     System.err.println("Failed to create log folder at "+logFolderName+". Proceding with logging deactivated.");
                 }
             } else {
-                System.err.println("No write privileges at "+logParentFolderName+". Try running the program as root to write the log directory structure.");
+                System.err.println("No write privileges at "+logParentFolderName);
+                System.err.println("Try running the program as root to write the log directory structure.");
             }
         }
 
@@ -66,8 +67,8 @@ public class Main {
             log = true;
 
             // Log some messages
-            logger.info("This is an information message.");
-            logger.warning("This is a warning message.");
+            //logger.info("This is an information message.");
+            //logger.warning("This is a warning message.");
             //System.out.println(logFileName);
         } catch (IOException e) {
             e.printStackTrace();
