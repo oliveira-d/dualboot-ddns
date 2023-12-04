@@ -22,59 +22,60 @@ public class Main {
     public static final String projectName = "dydns";
     
     public static void main(String[] args) {
-        // Check Log file
-        String[] logParentFolderNames = {"/var/log","/var/lib"};
-        String logFileName = projectName + ".log";
+        // // Check Log file
+        // String[] logParentFolderNames = {"/var/log","/var/lib"};
+        // String logFileName = projectName + ".log";
 
-        Path[] logParentFoldersPath = new Path[logParentFolderNames.length];
-        for (int i=0; i<logParentFolderNames.length; i++) {
-            logParentFoldersPath[i] = Paths.get(logParentFolderNames[i]);
-        }
+        // Path[] logParentFoldersPath = new Path[logParentFolderNames.length];
+        // for (int i=0; i<logParentFolderNames.length; i++) {
+        //     logParentFoldersPath[i] = Paths.get(logParentFolderNames[i]);
+        // }
 
-        String logParentFolderName = ".";
-        for (int i=0; i<logParentFolderNames.length; i++){
-            if (Files.exists(logParentFoldersPath[i])){
-                logParentFolderName = logParentFolderNames[i];
-                break;
-            }
-        }
+        // String logParentFolderName = ".";
+        // for (int i=0; i<logParentFolderNames.length; i++){
+        //     if (Files.exists(logParentFoldersPath[i])){
+        //         logParentFolderName = logParentFolderNames[i];
+        //         break;
+        //     }
+        // }
 
-        String logFolderName = logParentFolderName + "/" + projectName;
-        Path logFolderPath = Paths.get(logFolderName);
-        if (!Files.exists(logFolderPath)) {
-            if (hasWritePrivileges(logParentFolderName)){
-                try{
-                    Files.createDirectories(logFolderPath);
-                    //logFileName = logFolderName+"/"+logFileName;
-                } catch (IOException e) {
-                    System.err.println("Failed to create log folder at "+logFolderName+". Proceding with logging deactivated.");
-                }
-            } else {
-                System.err.println("No write privileges at "+logParentFolderName);
-                System.err.println("Try running the program as root to write the log directory structure.");
-            }
-        }
+        // String logFolderName = logParentFolderName + "/" + projectName;
+        // Path logFolderPath = Paths.get(logFolderName);
+        // if (!Files.exists(logFolderPath)) {
+        //     if (hasWritePrivileges(logParentFolderName)){
+        //         try{
+        //             Files.createDirectories(logFolderPath);
+        //             //logFileName = logFolderName+"/"+logFileName;
+        //         } catch (IOException e) {
+        //             System.err.println("Failed to create log folder at "+logFolderName+". Proceding with logging deactivated.");
+        //         }
+        //     } else {
+        //         System.err.println("No write privileges at "+logParentFolderName);
+        //         System.err.println("Try running the program as root to write the log directory structure.");
+        //     }
+        // }
 
-        Logger logger = Logger.getLogger("dydns");
-        boolean log;
-        try {
-            // Create a file handler that writes log messages to a file
-            FileHandler fileHandler = new FileHandler(logFolderName+"/"+logFileName,true);
-            fileHandler.setFormatter(new SimpleFormatter());
+        // Logger logger = Logger.getLogger("dydns");
+        // boolean log;
+        // try {
+        //     // Create a file handler that writes log messages to a file
+        //     FileHandler fileHandler = new FileHandler(logFolderName+"/"+logFileName,true);
+        //     fileHandler.setFormatter(new SimpleFormatter());
 
-            // Add the file handler to the logger
-            logger.addHandler(fileHandler);
-            log = true;
+        //     // Add the file handler to the logger
+        //     logger.addHandler(fileHandler);
+        //     log = true;
 
-            // Log some messages
-            //logger.info("This is an information message.");
-            //logger.warning("This is a warning message.");
-            //System.out.println(logFileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            log=false;
-        }
-
+        //     // Log some messages
+        //     //logger.info("This is an information message.");
+        //     //logger.warning("This is a warning message.");
+        //     //System.out.println(logFileName);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        //     log=false;
+        // }
+        Logger logger = LogWriter.configureLogWriter(projectName);
+        logger.info("Teste123");
         // Check configuration file
         String[] configFolderNames = {"/usr/local/etc","/etc","."};
         String configFileName = projectName + ".conf";
