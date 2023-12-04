@@ -11,11 +11,68 @@ import java.nio.file.FileSystems;
 import java.nio.file.LinkOption;
 //import java.nio.file.Path;
 
+// Log
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+//import java.io.IOException;
+
 public class Main {
 
     public static final String projectName = "dydns";
     
     public static void main(String[] args) {
+        // Check Log file
+        String[] logParentFolderNames = {"/var/log","/var/lib"};
+        String logFileName = projectName + ".log";
+
+        Path[] logParentFoldersPath = new Path[logParentFolderNames.length];
+        for (int i=0; i<logParentFolderNames.length; i++) {
+            logParentFoldersPath[i] = Paths.get(logParentFolderNames[i]);
+        }
+
+        String logParentFolderName = ".";
+        for (int i=0; i<logParentFolderNames.length; i++){
+            if (Files.exists(logParentFoldersPath[i])){
+                logParentFolderName = logParentFolderNames[i];
+                break;
+            }
+        }
+
+        String logFolderName = logParentFolderName + "/" + projectName;
+        Path logFolderPath = Paths.get(logFolderName);
+        if (!Files.exists(logFolderPath)) {
+            if (hasWritePrivileges(logParentFolderName)){
+                try{
+                    Files.createDirectories(logFolderPath);
+                    //logFileName = logFolderName+"/"+logFileName;
+                } catch (IOException e) {
+                    System.err.println("Failed to create log folder at "+logFolderName+". Proceding with logging deactivated.");
+                }
+            } else {
+                System.err.println("No write privileges at "+logParentFolderName+". Try running the program as root to write the log directory structure.");
+            }
+        }
+
+        Logger logger = Logger.getLogger("dydns");
+        boolean log;
+        try {
+            // Create a file handler that writes log messages to a file
+            FileHandler fileHandler = new FileHandler(logFolderName+"/"+logFileName,true);
+            fileHandler.setFormatter(new SimpleFormatter());
+
+            // Add the file handler to the logger
+            logger.addHandler(fileHandler);
+            log = true;
+
+            // Log some messages
+            logger.info("This is an information message.");
+            logger.warning("This is a warning message.");
+            //System.out.println(logFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            log=false;
+        }
 
         // Check configuration file
         String[] configFolderNames = {"/usr/local/etc","/etc","."};
@@ -35,12 +92,12 @@ public class Main {
             }
         }
 
-        String configFilePath = configFolderName + "/" + configFileName;
-        Path configFile = Paths.get(configFilePath);
+        String configFile = configFolderName + "/" + configFileName;
+        Path configFilePath = Paths.get(configFile);
         
-        ConfigHandler configHandler = new ConfigHandler(configFilePath);
-        if (!Files.exists(configFile)) {
-            System.err.println("Configuration file not found in "+configFilePath);
+        ConfigHandler configHandler = new ConfigHandler(configFile);
+        if (!Files.exists(configFilePath)) {
+            System.err.println("Configuration file not found in "+configFile);
             if (!hasWritePrivileges(configFolderName)){
                 System.err.println("No write privileges to "+configFolderName);
                 System.err.println("Try running the program as root to write the configuration file.");
@@ -49,7 +106,7 @@ public class Main {
                 System.out.println("Writing config...");
                 configHandler.createConfig(configurationParameters);
             }
-            System.out.println("Configuration file created at "+configFilePath);
+            System.out.println("Configuration file created at "+configFile);
             System.out.println("Run the program again to update you DDNS records.");
         } else {
             configHandler.readConfig();
