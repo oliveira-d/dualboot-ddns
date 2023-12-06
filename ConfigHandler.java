@@ -26,19 +26,20 @@ public class ConfigHandler {
 
     public void readConfig() {
         try (FileInputStream input = new FileInputStream(this.filePath)) {
-            System.out.println("Opening configuration file...");
             properties.load(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            Main.logger.warning("Failed to open configuration file for reading!");
         }
     }
 
     public void writeConfig() {
         try (FileOutputStream output = new FileOutputStream(this.filePath)) {
             properties.store(output, "Configuration Properties");
-            System.out.println("Config file written successfully.");
+            Main.logger.info("Configuration file written successfully!");
         } catch (IOException e) {
             e.printStackTrace();
+            Main.logger.warning("Failed to write configuration file!");
         }
     }
 

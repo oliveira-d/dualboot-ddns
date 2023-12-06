@@ -11,7 +11,9 @@ public class DyDNS {
     public static String getCurrentIP() throws IOException {
         URL url = new URL("https://ifconfig.me/");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
-            return reader.readLine().trim();
+            String retrievedIP = reader.readLine().trim();
+            Main.logger.info("Retrieved IP: "+retrievedIP);
+            return retrievedIP;
         }
     }
     
@@ -28,7 +30,9 @@ public class DyDNS {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
             String response = reader.readLine();
-            System.out.println("No-IP Update Response: " + response);
+            Main.logger.info("No-IP Update Response: " + response);
+        } catch (IOException e) {
+            Main.logger.warning("Failed to get proper response from No-IP");
         }
     }
 

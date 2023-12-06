@@ -20,6 +20,7 @@ import java.util.logging.SimpleFormatter;
 public class Main {
 
     public static final String projectName = "dydns";
+    public static Logger logger = LogWriter.configureLogWriter(projectName);
     
     public static void main(String[] args) {
         // // Check Log file
@@ -74,8 +75,6 @@ public class Main {
         //     e.printStackTrace();
         //     log=false;
         // }
-        Logger logger = LogWriter.configureLogWriter(projectName);
-        logger.info("Teste123");
         // Check configuration file
         String[] configFolderNames = {"/usr/local/etc","/etc","."};
         String configFileName = projectName + ".conf";
