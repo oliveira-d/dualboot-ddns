@@ -20,7 +20,8 @@ import java.util.logging.SimpleFormatter;
 public class Main {
 
     public static final String projectName = "dydns";
-    public static Logger logger = LogWriter.configureLogWriter(projectName);
+    public static LogManager logger = new LogManager(projectName,true);
+    public static LogManager ipMonitor = new LogManager("ipMonitor",false);
     
     public static void main(String[] args) {
         // // Check Log file
@@ -119,9 +120,13 @@ public class Main {
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
                 String currentIP = DyDNS.getCurrentIP();
-                DyDNS.NoIpUpdate(username, password, hostname, domain, currentIP);
+                if (!(ipMonitor.readLogLine(1).contains(currentIP))) {
+                    DyDNS.NoIpUpdate(username, password, hostname, domain, currentIP);
+                } else {
+                    logger.info("No change in IP address.");
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.info("Failed to get current IP address.");
             }
         }
     }

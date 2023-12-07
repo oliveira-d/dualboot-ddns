@@ -12,7 +12,7 @@ public class DyDNS {
         URL url = new URL("https://ifconfig.me/");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
             String retrievedIP = reader.readLine().trim();
-            Main.logger.info("Retrieved IP: "+retrievedIP);
+            Main.ipMonitor.info("Retrieved IP: "+retrievedIP);
             return retrievedIP;
         }
     }
@@ -28,7 +28,8 @@ public class DyDNS {
         String base64Credentials = java.util.Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
         connection.setRequestProperty("Authorization", "Basic " + base64Credentials);
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String response = reader.readLine();
             Main.logger.info("No-IP Update Response: " + response);
         } catch (IOException e) {
