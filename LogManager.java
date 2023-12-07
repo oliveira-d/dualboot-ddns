@@ -62,7 +62,7 @@ public class LogManager {
                 }
             }
 
-            Logger logger = Logger.getLogger("dydns");
+            Logger logger = Logger.getLogger(logName);
             boolean log;
             try {
                 // Create a file handler that writes log messages to a file
