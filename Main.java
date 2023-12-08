@@ -21,7 +21,7 @@ public class Main {
 
     public static final String projectName = "dydns";
     public static LogManager logger = new LogManager(projectName,true);
-    public static LogManager ipMonitor = new LogManager("ipMonitor",false);
+    public static LogManager ipMonitor = new LogManager("ipMonitor",true);
     
     public static void main(String[] args) {
         // // Check Log file
@@ -120,8 +120,10 @@ public class Main {
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
                 String currentIP = DyDNS.getCurrentIP();
-                if (!(ipMonitor.readLogLine(1).contains(currentIP))) {
+                if (!(ipMonitor.getLastLine().contains(currentIP))) {
                     DyDNS.NoIpUpdate(username, password, hostname, domain, currentIP);
+                    //DyDNS.DuckDNSUpdate("token-here","hostname-here");
+                    ipMonitor.info("Retrieved IP: "+currentIP);
                 } else {
                     logger.info("No change in IP address.");
                 }

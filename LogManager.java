@@ -88,19 +88,19 @@ public class LogManager {
             logger.warning(message);
         }
 
-        public String readLogLine(int lineNumber) {
+        public String getLastLine() {
             Path logFilePath = Path.of(this.logFileFull);
             String readLine = "";
             try {
                 // Read all lines from the log file
                 List<String> logLines = Files.readAllLines(logFilePath);
                 // Check if the file has at least two lines
-                if (logLines.size() > lineNumber) {
+                if (logLines.size() > 0) {
                     // Access the second line (index 1)
-                    readLine = logLines.get(lineNumber);
+                    readLine = logLines.get(logLines.size()-1);
                     // You can parse and analyze the second line as needed
                 } else {
-                    System.out.println("The log file does not have at least two lines.");
+                    System.out.println("The log file is empty. No data to read from.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
