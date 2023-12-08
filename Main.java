@@ -75,8 +75,6 @@ public class Main {
                     DyDNS.NoIpUpdate(username, password, hostname, domain);
                     //DyDNS.DuckDNSUpdate("token-here","hostname-here");
                     ipMonitor.info("Retrieved IP: "+currentIP);
-                } else {
-                    logger.info("No change in IP address.");
                 }
             } catch (IOException e) {
                 logger.info("Failed to get current IP address.");
