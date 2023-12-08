@@ -62,7 +62,7 @@ public class Main {
         configHandler.readConfig();
         String provider = configHandler.getProperty("provider");
         //String currentIP = DyDNS.getCurrentIP();
-        if (provider.equals("NoIP")) {
+        if (provider.equals("No-IP")) {
             String username = configHandler.getProperty("username");
             String password = configHandler.getProperty("password");
             String hostname = configHandler.getProperty("hostname");

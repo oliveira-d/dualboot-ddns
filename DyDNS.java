@@ -31,7 +31,7 @@ public class DyDNS {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String response = reader.readLine();
-            Main.logger.info("No-IP Update Response: " + response);
+            //Main.logger.info("No-IP Update Response: " + response);
         } catch (IOException e) {
             Main.logger.warning("Failed to get proper response from No-IP");
         }
