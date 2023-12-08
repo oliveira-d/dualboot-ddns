@@ -9,7 +9,9 @@ import java.util.Scanner;
 public class ConfigHandler {
 
     private Properties properties;
-    private String filePath; 
+    private String filePath;
+    private String[] NoIPConfigurationParameters = {"username","password","hostname","domain"};
+    private String[] DuckDNSConfigurationParameters = {"hostname","token"};
 
     public ConfigHandler(String filePath) {
         properties = new Properties();
@@ -43,10 +45,28 @@ public class ConfigHandler {
         }
     }
 
-    public void createConfig(String[] configurationParameters) {
+    public void createConfig() {
         
         Scanner scanner = new Scanner(System.in);
         String value;
+        System.out.printf("Enter your dynamic DNS service provider: %n1) No-IP%n2) DuckDNS%n");
+        int providerOption = scanner.nextInt();
+        scanner.nextLine(); // needed to avoid newLine char to get read int nextLine() below
+        String[] configurationParameters = {};
+        switch (providerOption) {
+            case 1:
+                this.setProperty("provider","No-IP");
+                configurationParameters = NoIPConfigurationParameters;
+                break;
+            case 2:
+                this.setProperty("provider","DuckDNS");
+                configurationParameters = DuckDNSConfigurationParameters;
+                break;
+            default:
+                this.setProperty("provider","No-IP");
+                configurationParameters = NoIPConfigurationParameters;
+                Main.logger.info("Default provider set to No-IP");
+        }
         for (int i=0; i<configurationParameters.length; i++){
             System.out.println("Enter "+configurationParameters[i]+":");
             value = scanner.nextLine();

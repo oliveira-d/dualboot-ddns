@@ -17,7 +17,7 @@ public class DyDNS {
         }
     }
     
-    public static void NoIpUpdate(String username, String password, String hostname, String domain, String currentIP) throws IOException {
+    public static void NoIpUpdate(String username, String password, String hostname, String domain) throws IOException {
         String updateUrl = String.format("https://dynupdate.no-ip.com/nic/update?hostname=%s.%s", hostname, domain);
         URL url = new URL(updateUrl);
 
