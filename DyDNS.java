@@ -31,13 +31,13 @@ public class DyDNS {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String response = reader.readLine();
-            //Main.logger.info("No-IP Update Response: " + response);
+            Main.logger.info("No-IP Update Response: " + response);
         } catch (IOException e) {
             Main.logger.warning("Failed to get proper response from No-IP");
         }
     }
 
-    public static void DuckDNSUpdate(String token, String subdomain) throws IOException {
+    public static void DuckDNSUpdate(String subdomain, String token) throws IOException {
         String updateUrl = String.format("https://www.duckdns.org/update?domains=%s&token=%s",subdomain,token);
         URL url = new URL(updateUrl);
 
