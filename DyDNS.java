@@ -44,15 +44,12 @@ public class DyDNS {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setDoOutput(true);
-//        String base64Credentials = java.util.Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
-  //      connection.setRequestProperty("Authorization", "Basic " + base64Credentials);
-
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String response = reader.readLine();
             Main.logger.info("DuckDNS Update Response: " + response);
         } catch (IOException e) {
-            Main.logger.warning("Failed to get proper response from No-IP");
+            Main.logger.warning("Failed to get proper response from DuckDNS");
         }
     }
 
