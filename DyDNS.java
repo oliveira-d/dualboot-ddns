@@ -7,7 +7,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class DyDNS {
-    
+    private static String userAgent = "DyDNS/0.9";
     public static String getCurrentIP() throws IOException {
         URL url = new URL("https://ifconfig.me/");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
@@ -22,6 +22,7 @@ public class DyDNS {
         URL url = new URL(updateUrl);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("User-Agent",userAgent);
         connection.setRequestMethod("GET");
         connection.setDoOutput(true);
         String credentials = username + ":" + password;
@@ -42,6 +43,7 @@ public class DyDNS {
         URL url = new URL(updateUrl);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("User-Agent",userAgent);
         connection.setRequestMethod("GET");
         connection.setDoOutput(true);
         try {
