@@ -53,7 +53,7 @@ public class Main {
                 System.err.println("Try running the program as root to write the configuration file.");
                 System.exit(0);
             } else {
-                System.out.println("Writing config...");
+                System.out.println("Configuring "+projectName+"...");
                 configHandler.createConfig();
             }
             System.out.println("Configuration file created at "+configFile);
@@ -62,7 +62,8 @@ public class Main {
         configHandler.readConfig();
         String provider = configHandler.getProperty("provider");
         //String currentIP = DyDNS.getCurrentIP();
-        if (provider.equals("No-IP")) {
+        
+        if (provider.equals(ConfigHandler.DDNSProviders[0])) {
             String username = configHandler.getProperty("username");
             String password = configHandler.getProperty("password");
             String hostname = configHandler.getProperty("hostname");
@@ -80,7 +81,27 @@ public class Main {
                 logger.info("Failed to get current IP address.");
             }
         }
-        if (provider.equals("DuckDNS")) {
+
+        if (provider.equals(ConfigHandler.DDNSProviders[1])) {
+            String username = configHandler.getProperty("username");
+            String password = configHandler.getProperty("password");
+            String hostname = configHandler.getProperty("hostname");
+            String domain = configHandler.getProperty("domain");
+            //procedes to update DDNS
+            //System.out.println(username+" "+password+" "+hostname+" "+domain);
+            try {
+                String currentIP = DyDNS.getCurrentIP();
+                if (!(ipMonitor.getLastLine().contains(currentIP))) {
+                    DyDNS.DynDNSUpdate(username, password, hostname, domain);
+                    //DyDNS.DuckDNSUpdate("token-here","hostname-here");
+                    ipMonitor.info("Retrieved IP: "+currentIP);
+                }
+            } catch (IOException e) {
+                logger.info("Failed to get current IP address.");
+            }
+        }
+
+        if (provider.equals(ConfigHandler.DDNSProviders[2])) {
             String token = configHandler.getProperty("token");
             String hostname = configHandler.getProperty("hostname");
             try {

@@ -10,7 +10,9 @@ public class ConfigHandler {
 
     private Properties properties;
     private String filePath;
+    public static String[] DDNSProviders = {"No-IP","DynDNS","DuckDNS"};
     private String[] NoIPConfigurationParameters = {"username","password","hostname","domain"};
+    private String[] DynDNSConfigurationParameters = {"username","password","hostname","domain"};
     private String[] DuckDNSConfigurationParameters = {"hostname","token"};
 
     public ConfigHandler(String filePath) {
@@ -49,23 +51,27 @@ public class ConfigHandler {
         
         Scanner scanner = new Scanner(System.in);
         String value;
-        System.out.printf("Enter your dynamic DNS service provider: %n1) No-IP%n2) DuckDNS%n");
+        System.out.printf("Enter your dynamic DNS service provider: %n1) %s%n2) %s%n3) %s%n",DDNSProviders[0],DDNSProviders[1],DDNSProviders[2]);
         int providerOption = scanner.nextInt();
         scanner.nextLine(); // needed to avoid newLine char to get read int nextLine() below
         String[] configurationParameters = {};
         switch (providerOption) {
             case 1:
-                this.setProperty("provider","No-IP");
+                this.setProperty("provider",DDNSProviders[0]);
                 configurationParameters = NoIPConfigurationParameters;
                 break;
             case 2:
-                this.setProperty("provider","DuckDNS");
+                this.setProperty("provider",DDNSProviders[1]);
+                configurationParameters = DynDNSConfigurationParameters;
+                break;
+            case 3:
+                this.setProperty("provider",DDNSProviders[2]);
                 configurationParameters = DuckDNSConfigurationParameters;
                 break;
             default:
-                this.setProperty("provider","No-IP");
+                this.setProperty("provider",DDNSProviders[0]);
                 configurationParameters = NoIPConfigurationParameters;
-                Main.logger.info("Default provider set to No-IP");
+                Main.logger.info("Default provider set to "+DDNSProviders[0]);
         }
         for (int i=0; i<configurationParameters.length; i++){
             System.out.println("Enter "+configurationParameters[i]+":");
