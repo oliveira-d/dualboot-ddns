@@ -39,9 +39,9 @@ public class DyDNS {
         }
     }
 
-    public static void DynDNSUpdate(String username, String password, String hostname, String domain) throws IOException {
+    public static void DynDNSUpdate(String username, String password, String hostname, String domain, String ipAddress) throws IOException {
         String provider = ConfigHandler.DDNSProviders[1];
-        String updateUrl = String.format("https://members.dyndns.org/v3/update?hostname=%s.%s",hostname,domain);
+        String updateUrl = String.format("https://members.dyndns.org/v3/update?hostname=%s.%s&myip=%s",hostname,domain,ipAddress);
         URL url = new URL(updateUrl);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

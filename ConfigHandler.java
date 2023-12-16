@@ -12,7 +12,7 @@ public class ConfigHandler {
     private String filePath;
     public static String[] DDNSProviders = {"No-IP","DynDNS","DuckDNS"};
     private String[] NoIPConfigurationParameters = {"username","password","hostname","domain"};
-    private String[] DynDNSConfigurationParameters = {"username","password","hostname","domain"};
+    private String[] DynDNSConfigurationParameters = {"username","updater client key","hostname","domain"};
     private String[] DuckDNSConfigurationParameters = {"hostname","token"};
 
     public ConfigHandler(String filePath) {

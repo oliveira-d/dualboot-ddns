@@ -84,7 +84,7 @@ public class Main {
 
         if (provider.equals(ConfigHandler.DDNSProviders[1])) {
             String username = configHandler.getProperty("username");
-            String password = configHandler.getProperty("password");
+            String password = configHandler.getProperty("updater client key");
             String hostname = configHandler.getProperty("hostname");
             String domain = configHandler.getProperty("domain");
             //procedes to update DDNS
@@ -92,7 +92,7 @@ public class Main {
             try {
                 String currentIP = DyDNS.getCurrentIP();
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {
-                    DyDNS.DynDNSUpdate(username, password, hostname, domain);
+                    DyDNS.DynDNSUpdate(username, password, hostname, domain,currentIP);
                     //DyDNS.DuckDNSUpdate("token-here","hostname-here");
                     ipMonitor.info("Retrieved IP: "+currentIP);
                 }
