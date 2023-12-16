@@ -73,9 +73,8 @@ public class Main {
             try {
                 String currentIP = DyDNS.getCurrentIP();
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {
-                    DyDNS.NoIpUpdate(username, password, hostname, domain);
-                    //DyDNS.DuckDNSUpdate("token-here","hostname-here");
-                    ipMonitor.info("Retrieved IP: "+currentIP);
+                    String response = DyDNS.NoIpUpdate(username, password, hostname, domain);
+                    if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
                 }
             } catch (IOException e) {
                 logger.info("Failed to get current IP address.");
@@ -92,9 +91,8 @@ public class Main {
             try {
                 String currentIP = DyDNS.getCurrentIP();
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {
-                    DyDNS.DynDNSUpdate(username, password, hostname, domain,currentIP);
-                    //DyDNS.DuckDNSUpdate("token-here","hostname-here");
-                    ipMonitor.info("Retrieved IP: "+currentIP);
+                    String response = DyDNS.DynDNSUpdate(username, password, hostname, domain,currentIP);
+                    if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
                 }
             } catch (IOException e) {
                 logger.info("Failed to get current IP address.");
@@ -107,8 +105,8 @@ public class Main {
             try {
                 String currentIP = DyDNS.getCurrentIP();
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {
-                    DyDNS.DuckDNSUpdate(hostname, token);
-                    ipMonitor.info("Retrieved IP: "+currentIP);
+                    String response = DyDNS.DuckDNSUpdate(hostname, token);
+                    if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
                 } else {
                     logger.info("No change in IP address.");
                 }
