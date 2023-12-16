@@ -64,10 +64,10 @@ public class Main {
         //String currentIP = DyDNS.getCurrentIP();
         
         if (provider.equals(ConfigHandler.DDNSProviders[0])) {
-            String username = configHandler.getProperty("username");
-            String password = configHandler.getProperty("password");
-            String hostname = configHandler.getProperty("hostname");
-            String domain = configHandler.getProperty("domain");
+            String username = configHandler.getProperty(ConfigHandler.NoIPConfigurationParameters[0]);
+            String password = configHandler.getProperty(ConfigHandler.NoIPConfigurationParameters[1]);
+            String hostname = configHandler.getProperty(ConfigHandler.NoIPConfigurationParameters[2]);
+            String domain = configHandler.getProperty(ConfigHandler.NoIPConfigurationParameters[3]);
             //procedes to update DDNS
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
@@ -83,10 +83,10 @@ public class Main {
         }
 
         if (provider.equals(ConfigHandler.DDNSProviders[1])) {
-            String username = configHandler.getProperty("username");
-            String password = configHandler.getProperty("updater client key");
-            String hostname = configHandler.getProperty("hostname");
-            String domain = configHandler.getProperty("domain");
+            String username = configHandler.getProperty(ConfigHandler.DynDNSConfigurationParameters[0]);
+            String password = configHandler.getProperty(ConfigHandler.DynDNSConfigurationParameters[1]);
+            String hostname = configHandler.getProperty(ConfigHandler.DynDNSConfigurationParameters[2]);
+            String domain = configHandler.getProperty(ConfigHandler.DynDNSConfigurationParameters[3]);
             //procedes to update DDNS
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
@@ -102,8 +102,8 @@ public class Main {
         }
 
         if (provider.equals(ConfigHandler.DDNSProviders[2])) {
-            String token = configHandler.getProperty("token");
-            String hostname = configHandler.getProperty("hostname");
+            String token = configHandler.getProperty(ConfigHandler.DuckDNSConfigurationParameters[0]);
+            String hostname = configHandler.getProperty(ConfigHandler.DuckDNSConfigurationParameters[1]);
             try {
                 String currentIP = DyDNS.getCurrentIP();
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {

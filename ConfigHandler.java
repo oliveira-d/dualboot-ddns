@@ -11,9 +11,9 @@ public class ConfigHandler {
     private Properties properties;
     private String filePath;
     public static String[] DDNSProviders = {"No-IP","DynDNS","DuckDNS"};
-    private String[] NoIPConfigurationParameters = {"username","password","hostname","domain"};
-    private String[] DynDNSConfigurationParameters = {"username","updater client key","hostname","domain"};
-    private String[] DuckDNSConfigurationParameters = {"hostname","token"};
+    public static String[] NoIPConfigurationParameters = {"username","password","hostname","domain"};
+    public static String[] DynDNSConfigurationParameters = {"username","updater client key","hostname","domain"};
+    public static String[] DuckDNSConfigurationParameters = {"hostname","token"};
 
     public ConfigHandler(String filePath) {
         properties = new Properties();
