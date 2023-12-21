@@ -24,7 +24,7 @@ public class DyDNS {
     
     public static String NoIpUpdate(String username, String password, String hostname, String domain) throws IOException {
         String provider = ConfigHandler.DDNSProviders[0];
-        String updateUrl = String.format("https://dynupdate.no-ip.com/nic/update?hostname=%s",hostname,domain);
+        String updateUrl = String.format("https://dynupdate.no-ip.com/nic/update?hostname=%s.%s",hostname,domain);
         URL url = new URL(updateUrl);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
