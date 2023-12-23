@@ -60,10 +60,11 @@ public class Main {
             //System.out.println("Run the program again to update you DDNS records.");
         }
         configHandler.readConfig();
-        String provider = configHandler.getProperty("provider");
+        String DDNS_provider = configHandler.getProperty("DDNS_provider");
+        String IPLookup_service = configHandler.getProperty("IPLookup_service");
         //String currentIP = DyDNS.getCurrentIP();
         
-        if (provider.equals(ConfigHandler.DDNSProviders[0])) {
+        if (DDNS_provider.equals(ConfigHandler.DDNSProviders[0])) {
             String username = configHandler.getProperty(ConfigHandler.NoIPConfigurationParameters[0]);
             String password = configHandler.getProperty(ConfigHandler.NoIPConfigurationParameters[1]);
             String hostname = configHandler.getProperty(ConfigHandler.NoIPConfigurationParameters[2]);
@@ -71,7 +72,7 @@ public class Main {
             //procedes to update DDNS
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
-                String currentIP = DyDNS.getCurrentIP();
+                String currentIP = DyDNS.getCurrentIP(IPLookup_service);
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {
                     String response = DyDNS.NoIpUpdate(username, password, hostname, domain);
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
@@ -81,7 +82,7 @@ public class Main {
             }
         }
 
-        if (provider.equals(ConfigHandler.DDNSProviders[1])) {
+        if (DDNS_provider.equals(ConfigHandler.DDNSProviders[1])) {
             String username = configHandler.getProperty(ConfigHandler.DynDNSConfigurationParameters[0]);
             String password = configHandler.getProperty(ConfigHandler.DynDNSConfigurationParameters[1]);
             String hostname = configHandler.getProperty(ConfigHandler.DynDNSConfigurationParameters[2]);
@@ -89,7 +90,7 @@ public class Main {
             //procedes to update DDNS
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
-                String currentIP = DyDNS.getCurrentIP();
+                String currentIP = DyDNS.getCurrentIP(IPLookup_service);
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {
                     String response = DyDNS.DynDNSUpdate(username, password, hostname, domain,currentIP);
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
@@ -99,11 +100,11 @@ public class Main {
             }
         }
 
-        if (provider.equals(ConfigHandler.DDNSProviders[2])) {
+        if (DDNS_provider.equals(ConfigHandler.DDNSProviders[2])) {
             String token = configHandler.getProperty(ConfigHandler.DuckDNSConfigurationParameters[0]);
             String hostname = configHandler.getProperty(ConfigHandler.DuckDNSConfigurationParameters[1]);
             try {
-                String currentIP = DyDNS.getCurrentIP();
+                String currentIP = DyDNS.getCurrentIP(IPLookup_service);
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {
                     String response = DyDNS.DuckDNSUpdate(hostname, token);
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);

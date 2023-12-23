@@ -14,6 +14,7 @@ public class ConfigHandler {
     public static String[] NoIPConfigurationParameters = {"username","password","hostname","domain"};
     public static String[] DynDNSConfigurationParameters = {"username","updater client key","hostname","domain"};
     public static String[] DuckDNSConfigurationParameters = {"hostname","token"};
+    public static String[] IPLookupService = {"ifconfig.me","checkip.amazonaws.com","api.ipify.org","ipinfo.io/ip","ident.me","icanhazip.com"};
 
     public ConfigHandler(String filePath) {
         properties = new Properties();
@@ -51,25 +52,26 @@ public class ConfigHandler {
         
         Scanner scanner = new Scanner(System.in);
         String value;
+        // Define DNS service provider
         System.out.printf("Enter your dynamic DNS service provider: %n1) %s%n2) %s%n3) %s%n",DDNSProviders[0],DDNSProviders[1],DDNSProviders[2]);
         int providerOption = scanner.nextInt();
         scanner.nextLine(); // needed to avoid newLine char to get read int nextLine() below
         String[] configurationParameters = {};
         switch (providerOption) {
             case 1:
-                this.setProperty("provider",DDNSProviders[0]);
+                this.setProperty("DDNS_provider",DDNSProviders[0]);
                 configurationParameters = NoIPConfigurationParameters;
                 break;
             case 2:
-                this.setProperty("provider",DDNSProviders[1]);
+                this.setProperty("DDNS_provider",DDNSProviders[1]);
                 configurationParameters = DynDNSConfigurationParameters;
                 break;
             case 3:
-                this.setProperty("provider",DDNSProviders[2]);
+                this.setProperty("DDNS_provider",DDNSProviders[2]);
                 configurationParameters = DuckDNSConfigurationParameters;
                 break;
             default:
-                this.setProperty("provider",DDNSProviders[0]);
+                this.setProperty("DDNS_provider",DDNSProviders[0]);
                 configurationParameters = NoIPConfigurationParameters;
                 Main.logger.info("Default provider set to "+DDNSProviders[0]);
         }
@@ -78,7 +80,13 @@ public class ConfigHandler {
             value = scanner.nextLine();
             this.setProperty(configurationParameters[i],value);
         }
-
+        // Define public IP address retrieval service
+        System.out.println("Enter your public IP address lookup service provider:");
+        for (int i=0; i<IPLookupService.length; i++) {
+            System.out.println((i+1)+") "+IPLookupService[i]);
+        }
+        int ipLookupProviderOption = scanner.nextInt();
+        this.setProperty("IPLookup_service",IPLookupService[ipLookupProviderOption-1]);
         // Write to config file
         this.writeConfig();
     }

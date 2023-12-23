@@ -13,8 +13,8 @@ import java.util.Set;
 public class DyDNS {
     private static String userAgent = "DyDNS/0.9";
 
-    public static String getCurrentIP() throws IOException {
-        URL url = new URL("https://ifconfig.me/");
+    public static String getCurrentIP(String IPLookup_service) throws IOException {
+        URL url = new URL("https://"+IPLookup_service);
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
             String retrievedIP = reader.readLine().trim();
             //Main.ipMonitor.info("Retrieved IP: "+retrievedIP);
