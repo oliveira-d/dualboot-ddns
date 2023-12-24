@@ -55,8 +55,9 @@ public class Main {
             } else {
                 System.out.println("Configuring "+projectName+"...");
                 configHandler.createConfig();
+                return;
             }
-            System.out.println("Configuration file created at "+configFile);
+            //System.out.println("Configuration file created at "+configFile);
             //System.out.println("Run the program again to update you DDNS records.");
         }
         configHandler.readConfig();
