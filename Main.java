@@ -79,7 +79,7 @@ public class Main {
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
                 }
             } catch (IOException e) {
-                logger.info("Failed to get current IP address.");
+                logger.warning("Failed to get current IP address.");
             }
         }
 
@@ -97,7 +97,7 @@ public class Main {
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
                 }
             } catch (IOException e) {
-                logger.info("Failed to get current IP address.");
+                logger.warning("Failed to get current IP address.");
             }
         }
 
@@ -109,11 +109,9 @@ public class Main {
                 if (!(ipMonitor.getLastLine().contains(currentIP))) {
                     String response = DyDNS.DuckDNSUpdate(hostname, token);
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
-                } else {
-                    logger.info("No change in IP address.");
                 }
             } catch (IOException e) {
-                logger.info("Failed to get current IP address.");
+                logger.warning("Failed to get current IP address.");
             }
         }        
     }
