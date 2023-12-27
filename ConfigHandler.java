@@ -15,6 +15,7 @@ public class ConfigHandler {
     public static String[] DynDNSConfigurationParameters = {"username","updater client key","hostname","domain"};
     public static String[] DuckDNSConfigurationParameters = {"hostname","token"};
     public static String[] IPLookupServices = {"ifconfig.me","checkip.amazonaws.com","api.ipify.org","ipinfo.io/ip","ident.me","icanhazip.com"};
+    public static String defaultIPLookupService = IPLookupServices[1];
 
     public ConfigHandler(String filePath) {
         properties = new Properties();
@@ -93,7 +94,7 @@ public class ConfigHandler {
         int ipLookupProviderOption = scanner.nextInt();
         if (ipLookupProviderOption < 1 || ipLookupProviderOption > IPLookupServices.length) {
             System.out.println("Invalid option, proceeding with default service.");
-            this.setProperty("IPLookup_service",IPLookupServices[1]);
+            this.setProperty("IPLookup_service",defaultIPLookupService);
         } else {
             this.setProperty("IPLookup_service",IPLookupServices[ipLookupProviderOption-1]);
         }
