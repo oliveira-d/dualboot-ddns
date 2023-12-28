@@ -1,3 +1,5 @@
+package com.dualboot.dydns;
+
 import java.io.IOException;
 
 //user for checking wether configuration files and paths exist

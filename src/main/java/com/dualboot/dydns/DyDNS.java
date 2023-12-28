@@ -1,3 +1,5 @@
+package com.dualboot.dydns;
+
 //used by NoIP updater
 import java.io.BufferedReader;
 import java.io.IOException;
