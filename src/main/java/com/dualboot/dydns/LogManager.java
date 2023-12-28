@@ -56,7 +56,7 @@ public class LogManager {
                         Files.createDirectories(logFolderPath);
                         //logFileName = logFolderName+"/"+logFileName;
                     } catch (IOException e) {
-                        System.err.println("Failed to create log folder at "+logFolderName+". Proceding with logging deactivated.");
+                        System.err.println("Failed to create log folder at "+logFolderName+". Proceeding with logging to file deactivated.");
                     }
                 } else {
                     System.err.println("No write privileges at "+logParentFolderName);
@@ -65,7 +65,6 @@ public class LogManager {
             }
 
             Logger logger = Logger.getLogger(logName);
-            boolean log;
             try {
                 // Create a file handler that writes log messages to a file
                 this.logFileFull = logFolderName+"/"+logFileName;
@@ -74,10 +73,8 @@ public class LogManager {
 
                 // Add the file handler to the logger
                 logger.addHandler(fileHandler);
-                log = true;
             } catch (IOException e) {
-                e.printStackTrace();
-                log=false;
+                System.err.println("Could not open log file "+logFolderName+"/"+logFileName+" for writing. Proceeding with logging to file deactivated.");
             }
             this.logger = logger;
         }
@@ -105,7 +102,8 @@ public class LogManager {
                     System.out.println("The log file is empty. No data to read from.");
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                System.err.println("Could not read log file "+this.logFileFull);
             }
             return readLine;
         }

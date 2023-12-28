@@ -36,7 +36,6 @@ public class ConfigHandler {
         try (FileInputStream input = new FileInputStream(this.filePath)) {
             properties.load(input);
         } catch (IOException e) {
-            //e.printStackTrace();
             Main.logger.warning("Failed to open configuration file for reading!");
         }
     }
@@ -46,7 +45,6 @@ public class ConfigHandler {
             properties.store(output, "Configuration Properties");
             Main.logger.info("Configuration file written successfully!");
         } catch (IOException e) {
-            e.printStackTrace();
             Main.logger.warning("Failed to write configuration file!");
         }
     }
