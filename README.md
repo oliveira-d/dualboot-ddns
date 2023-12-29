@@ -5,6 +5,7 @@ Wrote it because No-IP's Dynamic Update Client does not support FreeBSD (my serv
 To build you will need OpenJDK 17 and Maven. Clone the project repo, cd into the project folder, and issue these commands:
 
 mvn compile
+
 mvn package
 
 This will create a folder named target and the jar executable package will be inside.
