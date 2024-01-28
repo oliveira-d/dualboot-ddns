@@ -48,7 +48,11 @@ public class Main {
         Path configFilePath = Paths.get(configFile);
         
         ConfigHandler configHandler = new ConfigHandler(configFile);
-        if (!Files.exists(configFilePath) || args[0].equals("--configure")) {
+        
+        String arg0 = "none";
+        if ( args.length > 0 ) arg0 = args[0];
+        
+        if (!Files.exists(configFilePath) || arg0.equals("--configure")) {
             if (!Files.exists(configFilePath)) System.err.println("Configuration file not found in "+configFile);
             if (!hasWritePrivileges(configFolderName)){
                 System.err.println("No write privileges to "+configFolderName);
@@ -76,7 +80,7 @@ public class Main {
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
                 String currentIP = DyDNS.getCurrentIP(IPLookup_service);
-                if (!(ipMonitor.getLastLine().contains(currentIP)) || args[0].equals("--force")) {
+                if (!(ipMonitor.getLastLine().contains(currentIP)) || arg0.equals("--force")) {
                     String response = DyDNS.NoIpUpdate(username, password, hostname, domain);
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
                 }
@@ -94,7 +98,7 @@ public class Main {
             //System.out.println(username+" "+password+" "+hostname+" "+domain);
             try {
                 String currentIP = DyDNS.getCurrentIP(IPLookup_service);
-                if (!(ipMonitor.getLastLine().contains(currentIP)) || args[0].equals("--force")) {
+                if (!(ipMonitor.getLastLine().contains(currentIP)) || arg0.equals("--force")) {
                     String response = DyDNS.DynDNSUpdate(username, password, hostname, domain,currentIP);
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
                 }
@@ -108,7 +112,7 @@ public class Main {
             String hostname = configHandler.getProperty(ConfigHandler.DuckDNSConfigurationParameters[1]);
             try {
                 String currentIP = DyDNS.getCurrentIP(IPLookup_service);
-                if (!(ipMonitor.getLastLine().contains(currentIP)) || args[0].equals("--force")) {
+                if (!(ipMonitor.getLastLine().contains(currentIP)) || arg0.equals("--force")) {
                     String response = DyDNS.DuckDNSUpdate(hostname, token);
                     if (DyDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP);
                 }
