@@ -1,4 +1,4 @@
-package com.dualboot.dydns;
+package com.github.oliveiradd.dydns;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

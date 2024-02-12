@@ -1,4 +1,4 @@
-package com.dualboot.dydns;
+package com.github.oliveiradd.dydns;
 
 //used by NoIP updater
 import java.io.BufferedReader;
