@@ -7,12 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-// used to check write privileges
-import java.nio.file.FileSystems;
-//import java.nio.file.Files;
-import java.nio.file.LinkOption;
-//import java.nio.file.Path;
-
 // Log
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
