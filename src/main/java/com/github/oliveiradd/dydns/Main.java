@@ -2,16 +2,10 @@ package com.github.oliveiradd.dydns;
 
 import java.io.IOException;
 
-//user for checking wether configuration files and paths exist
+//user for checking wether configuration files and paths exist, and check writability
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-// used to check write privileges
-import java.nio.file.FileSystems;
-//import java.nio.file.Files;
-import java.nio.file.LinkOption;
-//import java.nio.file.Path;
 
 // Log
 import java.util.logging.FileHandler;
@@ -136,7 +130,7 @@ public class Main {
 
     public static boolean hasWritePrivileges(String configFolder) {
     
-        Path path = FileSystems.getDefault().getPath(configFolder);
+        Path path = Paths.get(configFolder);
 
         if (Files.isWritable(path)) {
             return true;
