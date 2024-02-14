@@ -8,10 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 // Log
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-//import java.io.IOException;
 
 public class Main {
 
